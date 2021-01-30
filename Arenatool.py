@@ -5,40 +5,34 @@ import ndjson
 import csv
 from configparser import ConfigParser
 
-#  with open('results.ndjson') as file:
-#     data = ndjson.reader(file)
-
-# for i in data:
-#    print(i["rank"])
-
+#read parameter file
 parser = ConfigParser()
-parser.read("Parameter.ini")
+parser.read("parameter.ini")
 
+#parse the parameter file
 configObject = parser["PARAMS"]
-id_Arena = configObject["ArenaID"]
-x_te_Arena = configObject["xteArena"]
+id_arena = configObject["arenaID"]
+file_name = configObject["output_file_name"]
 
-url = "https://lichess.org/api/tournament/" + id_Arena + "/results"
+#download arena data of lichess
+url = "https://lichess.org/api/tournament/" + id_arena + "/results"
 param = dict()
 resp = requests.get(url=url, params=param)
 list_resp = resp.text.splitlines()
 data = list(map(lambda x: json.loads(x), list_resp))
 
-# for i in data:
-#    print(i["rank"])
-#    print(i["username"])
-
-columns = ["Rang", "Username", "Punkte", "Turnierleistung"]
+#create CSV file
+columns = ["rank", "username", "points", "performance"]
 now = datetime.datetime.today()
 time = now.strftime('%Y%m%d_%H%M')
-with open('Ergebnis_' + x_te_Arena + '_Arena_' + time + '.csv', 'w', newline='') as file:
+with open(file_name + time + '.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(columns)
     for i in data:
         try:
             writer.writerow(
             [i["rank"], i["username"], i["score"], i["performance"]])
-        except:
+        except: #if no games played, it results in an error
             writer.writerow(
-            [i["rank"], i["username"], i["score"], "nicht gespielt!"])
+            [i["rank"], i["username"], i["score"], "no games!"])
 
