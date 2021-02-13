@@ -8,10 +8,10 @@ The Script downloads the Players of an arena or swiss tournament, with their sco
 5. as a result it creates a csv file which you can e.g. import in an Excel sheet.
 
 parameter_arena.ini:
-output_file_name is how the csv is named. It adds the actual time.
-arenaID is the last part of the tournament link: lichess.org/tournament/{arenaID}
+- output_file_name is how the csv is named. It adds the actual time.
+- arenaID is the last part of the tournament link: lichess.org/tournament/{arenaID}
 
 parameter_swiss_ini:
-output_file_name is how the csv is named. It adds the actual time.
-arenaID is the last part of the tournament link: lichess.org/tournament/{arenaID}
-for the following variables you can choose with true or false whether it should be displayed or not.
+- output_file_name is how the csv is named. It adds the actual time.
+- arenaID is the last part of the tournament link: lichess.org/tournament/{arenaID}
+- for the following variables you can choose with true or false whether it should be displayed or not.
